@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_1"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="265dp"
+        android:layout_height="93dp"
+        android:background="@drawable/ic_animalpuzzle"
+        />
+
+    <Button
+        android:id="@+id/btn_start2"
+        android:layout_width="265dp"
+        android:layout_height="93dp"
+        android:background="@drawable/ic_learn"
+        />
+    <Button
+        android:background="@drawable/ic_backgruodgame"
+        android:id="@+id/btn_game"
+        android:layout_width="265dp"
+        android:layout_height="93dp" />
+
+
+</LinearLayout>
