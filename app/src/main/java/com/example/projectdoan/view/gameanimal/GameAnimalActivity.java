@@ -42,6 +42,8 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
     private RecyclerView recyclerQuestion;
     private RecyclerView recyclerAnswer;
 
+    private boolean isUsedPoint = false;
+
     private int point;
     private static final String KEY_POINT = "KEY_POINT";
 
@@ -146,6 +148,7 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
             point -= 100;
             SharedPrefUtils.saveData(this, KEY_POINT, point);
             txtPoint.setText(point + "");
+            isUsedPoint = true;
         } else {
             Toast.makeText(this, "Bạn không đủ điểm để mở ô!", Toast.LENGTH_SHORT).show();
         }
@@ -161,8 +164,14 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
             point += 200;
             txtPoint.setText(point + "");
             SharedPrefUtils.saveData(this, KEY_POINT, point);
+            if (isUsedPoint){
+                Toast.makeText(this, "Chuyển câu tiếp theo!", Toast.LENGTH_SHORT).show();
+            }
         } else if (answerString.length() == questions.size()) {
             Toast.makeText(this, "Rất tiếc bạn đã trả lời sai!", Toast.LENGTH_SHORT).show();
+            if (isUsedPoint){
+                Toast.makeText(this, "Chuyển câu tiếp theo!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
