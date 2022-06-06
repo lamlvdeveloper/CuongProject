@@ -15,9 +15,7 @@
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity
             android:name=".view.gameanimal.GameAnimalActivity"
-            android:exported="false"
-            android:label="@string/title_activity_game2"
-            android:theme="@style/NoActionBar" />
+            android:exported="false" />
         <activity android:name=".view.animal.AnimalListActivity"></activity>
         <activity
             android:name=".view.HomeActivity"

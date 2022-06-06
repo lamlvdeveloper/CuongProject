@@ -8,8 +8,13 @@ import com.example.projectdoan.database.SharedPrefUtils;
 import com.example.projectdoan.model.Animal;
 import com.example.projectdoan.model.ButtonCharacter;
 import com.example.projectdoan.view.game.GameActivity;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
@@ -23,6 +28,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -62,7 +68,7 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
 
     private void setupData() {
         point = SharedPrefUtils.getIntData(this, KEY_POINT);
-
+        txtPoint.setText(point + "");
         Animal animal = animals.get(random.nextInt(animals.size() - 1));
 
         answerString = "";
@@ -70,24 +76,28 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
 
         questions.clear();
         imgQuestion.setImageBitmap(animal.getId());
-        for (String character : Arrays.asList(animal.getName())) {
-            questions.add(new ButtonCharacter(character, false));
+        for (Character character : animal.getName().toCharArray()) {
+            questions.add(new ButtonCharacter(character.toString(), false));
             questionString += character;
         }
         questionAdapter.setCharacters(questions);
+        questionAdapter.notifyDataSetChanged();
 
         answers.clear();
-        for (String character : Arrays.asList(animal.getName())) {
-            answers.add(new ButtonCharacter(character, false));
-            answers.add(new ButtonCharacter(Arrays.asList("QWERTYUIOPASDFGHJKJLZXCVBNM").get(random.nextInt(13)), false));
+        for (Character character : animal.getName().toCharArray()) {
+            answers.add(new ButtonCharacter(character.toString(), false));
+
+            String randomValue = String.valueOf("QWERTYUIOPASDFGHJKJLZXCVBNM".charAt(random.nextInt(13)));
+            answers.add(new ButtonCharacter(randomValue, false));
         }
         answerAdapter.setCharacters(answers);
+        answerAdapter.notifyDataSetChanged();
     }
 
     private void initViews() {
         btnHome = findViewById(R.id.btn_home);
         btnTiep = findViewById(R.id.btn_tiep);
-        txtPoint = findViewById(R.id.txt_point);
+        txtPoint = findViewById(R.id.txt_point_animal);
         imgQuestion = findViewById(R.id.imgQuestion);
         recyclerQuestion = findViewById(R.id.recycler_question);
         recyclerAnswer = findViewById(R.id.recycler_answer);
@@ -97,6 +107,22 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
         animals = databaseManager.getAnimals();
         questionAdapter = new QuestionAdapter(this);
         answerAdapter = new AnswerAdapter(this);
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+        layoutManager.setAlignItems(AlignItems.CENTER);
+
+        FlexboxLayoutManager layoutManager2 = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+        layoutManager.setAlignItems(AlignItems.CENTER);
+
+        recyclerQuestion.setAdapter(questionAdapter);
+        recyclerQuestion.setLayoutManager(layoutManager);
+        recyclerAnswer.setAdapter(answerAdapter);
+        recyclerAnswer.setLayoutManager(layoutManager2);
+
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +145,7 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
             questionAdapter.notifyItemChanged(position);
             point -= 100;
             SharedPrefUtils.saveData(this, KEY_POINT, point);
+            txtPoint.setText(point + "");
         } else {
             Toast.makeText(this, "Bạn không đủ điểm để mở ô!", Toast.LENGTH_SHORT).show();
         }
@@ -126,15 +153,16 @@ public class GameAnimalActivity extends AppCompatActivity implements QuestionAda
 
     @Override
     public void itemAnswerClicked(ButtonCharacter buttonCharacter) {
+        answerString += buttonCharacter.getName();
+        questions.get(answerString.length() - 1).setShow(true);
+        questionAdapter.notifyDataSetChanged();
         if (answerString.length() == questions.size() && answerString.equals(questionString)) {
             Toast.makeText(this, "Bạn Đúng Là Thiên Tài !", Toast.LENGTH_SHORT).show();
             point += 200;
-            txtPoint.setText(point);
+            txtPoint.setText(point + "");
             SharedPrefUtils.saveData(this, KEY_POINT, point);
         } else if (answerString.length() == questions.size()) {
             Toast.makeText(this, "Rất tiếc bạn đã trả lời sai!", Toast.LENGTH_SHORT).show();
-        } else {
-            answerString += buttonCharacter.getName();
         }
     }
 }

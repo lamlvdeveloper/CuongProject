@@ -26,7 +26,7 @@
         android:layout_height="93dp"
         android:background="@drawable/ic_backgruodgame" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
@@ -34,22 +34,17 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_backgroud"
-            app:layout_constraintBottom_toBottomOf="@id/btn_game_animal"
-            app:layout_constraintStart_toStartOf="@id/btn_game_animal"
-            app:layout_constraintTop_toTopOf="btn_game_animal" />
+            android:src="@drawable/ic_backgroud" />
 
         <Button
             android:id="@+id/btn_game_animal"
             android:layout_width="265dp"
             android:layout_height="93dp"
-            android:background="@drawable/ic_backgruodgame"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@drawable/ic_backgruodgame" />
+    </RelativeLayout>
 
 
 </LinearLayout>

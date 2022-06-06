@@ -43,7 +43,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        return characters.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

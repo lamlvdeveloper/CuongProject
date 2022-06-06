@@ -47,7 +47,6 @@ public class GameActivity extends Activity {
     private String dapan;
     private List<IDButton> listChar;
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -43,7 +43,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return characters.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,6 +60,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
         }
 
         public void onBind(ButtonCharacter character) {
+            txtText.setText(character.getName());
             layoutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
